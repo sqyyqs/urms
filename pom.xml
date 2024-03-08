@@ -20,12 +20,15 @@
         <module>urms-app</module>
         <module>urms-persistence</module>
         <module>urms-core</module>
+        <module>urms-dto</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <jose-jwt.version>9.31</jose-jwt.version>
 
         <revision>0.0.1</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -47,6 +50,17 @@
                 <groupId>com.sqy</groupId>
                 <artifactId>urms-persistence</artifactId>
                 <version>${revision}${changelist}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sqy</groupId>
+                <artifactId>urms-dto</artifactId>
+                <version>${revision}${changelist}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${jose-jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

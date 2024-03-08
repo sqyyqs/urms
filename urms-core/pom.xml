@@ -15,12 +15,22 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.sqy</groupId>
             <artifactId>urms-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sqy</groupId>
+            <artifactId>urms-dto</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${jose-jwt.version}</version>
         </dependency>
     </dependencies>
 

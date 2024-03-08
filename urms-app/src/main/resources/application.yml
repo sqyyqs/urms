@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: postgres
+    password: postgrespw
+    url: jdbc:postgresql://localhost:5432/urms
+  jpa:
+    open-in-view: false
+    show-sql: true
+logging:
+  level:
+    org.springframework.security: trace
+jwt:
+  token-key: '{"kty":"oct","k":"h17SGRX5FRZooHA0RKGctZ-KtR9FoESgCnHG3BNg5XI"}'
