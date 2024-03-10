@@ -25,7 +25,6 @@ import java.text.ParseException;
 import static com.sqy.urms.persistence.model.UserRole.ADMINISTRATOR;
 import static com.sqy.urms.persistence.model.UserRole.OPERATOR;
 import static com.sqy.urms.persistence.model.UserRole.USER;
-import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @EnableWebSecurity
@@ -57,7 +56,7 @@ public class SecurityConfiguration {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(withDefaults())
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests
