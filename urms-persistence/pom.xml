@@ -22,6 +22,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sqy</groupId>
+            <artifactId>urms-dto</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

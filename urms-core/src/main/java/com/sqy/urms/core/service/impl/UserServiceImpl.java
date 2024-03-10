@@ -1,15 +1,18 @@
 package com.sqy.urms.core.service.impl;
 
 import com.sqy.urms.core.mapper.TokenMapper;
+import com.sqy.urms.core.mapper.UserMapper;
 import com.sqy.urms.core.service.UserService;
 import com.sqy.urms.core.util.JwtUtils;
-import com.sqy.urms.dto.request.LoginRequest;
-import com.sqy.urms.dto.response.LoginTokenResponse;
+import com.sqy.urms.dto.loginout.LoginRequest;
+import com.sqy.urms.dto.loginout.LoginTokenResponse;
 import com.sqy.urms.dto.token.Token;
+import com.sqy.urms.dto.user.UserDto;
 import com.sqy.urms.persistence.model.BlackListToken;
 import com.sqy.urms.persistence.model.User;
 import com.sqy.urms.persistence.repository.BlackListTokenRepository;
 import com.sqy.urms.persistence.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +29,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final TokenMapper tokenMapper;
+    private final UserMapper userMapper;
     private final BlackListTokenRepository blackListTokenRepository;
 
-    public UserServiceImpl(UserRepository userRepository, TokenMapper tokenMapper, BlackListTokenRepository blackListTokenRepository) {
+    public UserServiceImpl(UserRepository userRepository, TokenMapper tokenMapper, UserMapper userMapper, BlackListTokenRepository blackListTokenRepository) {
         this.userRepository = userRepository;
         this.tokenMapper = tokenMapper;
+        this.userMapper = userMapper;
         this.blackListTokenRepository = blackListTokenRepository;
     }
 
@@ -80,5 +85,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public boolean isTokenBlacklisted(String jwtToken) {
        return blackListTokenRepository.existsByValue(jwtToken);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<UserDto>> getAll() {
+        return ResponseEntity.ok(userRepository.findAll(Sort.by("id").ascending()).stream().map(userMapper::toDto).toList());
     }
 }

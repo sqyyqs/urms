@@ -12,4 +12,11 @@
     <artifactId>urms-dto</artifactId>
     <version>${revision}${changelist}</version>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+        </dependency>
+    </dependencies>
 </project>

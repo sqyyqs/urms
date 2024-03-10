@@ -16,7 +16,7 @@ public class BlackListToken {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "token", nullable = false, updatable = false, columnDefinition = "text")
+    @Column(name = "token", unique = true, nullable = false, updatable = false, columnDefinition = "text")
     private String value;
 
     public BlackListToken() {

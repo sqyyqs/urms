@@ -29,6 +29,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <jose-jwt.version>9.31</jose-jwt.version>
+        <google-jsr305.version>3.0.2</google-jsr305.version>
+
 
         <revision>0.0.1</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -61,6 +63,12 @@
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
                 <version>${jose-jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${google-jsr305.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

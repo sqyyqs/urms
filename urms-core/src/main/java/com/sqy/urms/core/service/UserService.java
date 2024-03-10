@@ -1,8 +1,11 @@
 package com.sqy.urms.core.service;
 
-import com.sqy.urms.dto.request.LoginRequest;
-import com.sqy.urms.dto.response.LoginTokenResponse;
+import com.sqy.urms.dto.loginout.LoginRequest;
+import com.sqy.urms.dto.loginout.LoginTokenResponse;
+import com.sqy.urms.dto.user.UserDto;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -11,5 +14,8 @@ public interface UserService {
     boolean blacklistToken(String authorizationHeader);
 
     boolean isTokenBlacklisted(String jwtToken);
+
+    ResponseEntity<List<UserDto>> getAll();
+
 }
 

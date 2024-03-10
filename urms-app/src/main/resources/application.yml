@@ -5,7 +5,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/urms
   jpa:
     open-in-view: false
-    show-sql: true
 logging:
   level:
     org.springframework.security: trace

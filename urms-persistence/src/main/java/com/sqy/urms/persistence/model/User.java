@@ -23,8 +23,11 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
+
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -36,6 +39,14 @@ public class User {
     private List<UserRole> authorities;
 
     public User() {
+    }
+
+    public User(Long id, String login, String name, String password, List<UserRole> authorities) {
+        this.id = id;
+        this.login = login;
+        this.name = name;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     public Long getId() {
@@ -70,6 +81,14 @@ public class User {
         this.authorities = authorities;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
@@ -77,6 +96,7 @@ public class User {
         sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", authorities=").append(authorities);
+        sb.append(", name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
     }

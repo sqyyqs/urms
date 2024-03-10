@@ -4,13 +4,14 @@ import com.sqy.urms.core.mapper.TokenMapper;
 import com.sqy.urms.core.service.UserService;
 import com.sqy.urms.core.util.JwtUtils;
 import com.sqy.urms.dto.token.Token;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Nullable;
 
 @Component
 public class JwtAuthenticationConverter implements AuthenticationConverter {

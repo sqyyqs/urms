@@ -1,7 +1,8 @@
 package com.sqy.urms.core.util;
 
-import jakarta.annotation.Nullable;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.Nullable;
 
 public final class JwtUtils {
 
@@ -10,7 +11,7 @@ public final class JwtUtils {
     }
 
     @Nullable
-    public static String extractToken(String bearerToken) {
+    public static String extractToken(@Nullable String bearerToken) {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
