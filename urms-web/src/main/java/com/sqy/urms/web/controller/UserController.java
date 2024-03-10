@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -44,6 +45,12 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAll() {
         logger.info("Invoke getAll().");
         return userService.getAll();
+    }
+
+    @PostMapping("/opp")
+    public ResponseEntity<UserDto> makeOperator(@RequestParam("id") long id) {
+        logger.info("Invoke makeOperator({}).", id);
+        return userService.makeOpp(id);
     }
 
 }

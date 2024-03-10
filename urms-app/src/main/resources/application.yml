@@ -5,6 +5,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/urms
   jpa:
     open-in-view: false
+  liquibase:
+    enabled: true
+    default-schema: public
+    change-log: classpath:/migrations/changelogs/db-changelog-master.xml
 logging:
   level:
     org.springframework.security: trace

@@ -30,7 +30,7 @@
 
         <jose-jwt.version>9.31</jose-jwt.version>
         <google-jsr305.version>3.0.2</google-jsr305.version>
-
+        <liquibase.version>4.26.0</liquibase.version>
 
         <revision>0.0.1</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -69,6 +69,12 @@
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>${google-jsr305.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

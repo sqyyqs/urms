@@ -17,5 +17,6 @@ public interface UserService {
 
     ResponseEntity<List<UserDto>> getAll();
 
+    ResponseEntity<UserDto> makeOpp(long id);
 }
 

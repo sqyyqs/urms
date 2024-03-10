@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests
-                                .requestMatchers("/api/user/").hasRole(ADMINISTRATOR.name())
+                                .requestMatchers("/api/user/", "/api/user/opp").hasRole(ADMINISTRATOR.name())
                                 .requestMatchers("/api/request/updateStatus").hasAnyRole(USER.name(), OPERATOR.name())
                                 .requestMatchers("/api/request/create", "/api/request/update").hasRole(USER.name())
                                 .requestMatchers(HttpMethod.GET, "/api/request/{id}").hasRole(OPERATOR.name())

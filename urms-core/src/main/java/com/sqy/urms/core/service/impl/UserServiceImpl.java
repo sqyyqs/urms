@@ -12,6 +12,8 @@ import com.sqy.urms.persistence.model.BlackListToken;
 import com.sqy.urms.persistence.model.User;
 import com.sqy.urms.persistence.repository.BlackListTokenRepository;
 import com.sqy.urms.persistence.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,8 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.sqy.urms.persistence.model.UserRole.OPERATOR;
+
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final TokenMapper tokenMapper;
@@ -42,6 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<LoginTokenResponse> login(LoginRequest loginRequest) {
+        logger.info("Invoke login({}).", loginRequest.login());
         User user = userRepository.findByLoginAndPassword(loginRequest.login(), loginRequest.password());
         if (user == null) {
             return ResponseEntity.notFound().build();
@@ -65,6 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean blacklistToken(String authorizationHeader) {
+        logger.info("Invoke blacklistToken({}).", authorizationHeader);
         String jwt = JwtUtils.extractToken(authorizationHeader);
         if (jwt == null) {
             return false;
@@ -84,13 +92,34 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public boolean isTokenBlacklisted(String jwtToken) {
-       return blackListTokenRepository.existsByValue(jwtToken);
+        logger.info("Invoke isTokenBlacklisted({}).", jwtToken);
+        return blackListTokenRepository.existsByValue(jwtToken);
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<List<UserDto>> getAll() {
+        logger.info("Invoke getAll().");
         return ResponseEntity.ok(userRepository.findAll(Sort.by("id").ascending()).stream().map(userMapper::toDto).toList());
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<UserDto> makeOpp(long id) {
+        logger.info("Invoke makeOpp({}).", id);
+
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User result = null;
+        if (!user.getAuthorities().contains(OPERATOR)) {
+            user.getAuthorities().add(OPERATOR);
+            result = userRepository.save(user);
+        }
+        UserDto dto = userMapper.toDto(result);
+        return ResponseEntity.ofNullable(dto);
     }
 }
