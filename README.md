@@ -6,13 +6,13 @@ urms - User Request Management System
 - user:user - USER
 - adminoper:adminoper - ADMINISTRATOR+OPERATOR
 - adminuser:adminuser - ADMINISTRATOR+USER
-- operuser:operuser - OPERATOR_USER
+- operuser:operuser - OPERATOR+USER
 - usertobeop:usertobeop - USER
 
 ### Жизненный цикл заявки 
 1. /request/create – только для USER, создает DRAFT 
 2. /request/update - только для USER и DRAFT заявки, меняет основные параметры
-3. /request/updateStatus –  *payload*`{..."newRequestStatus": "SENT"...}` – только для USER, меняет статус заявки на SENT 4
+3. /request/updateStatus –  *payload*`{..."newRequestStatus": "SENT"...}` – только для USER, меняет статус заявки на SENT 
 4. /request/updateStatus –  *payload*`{..."newRequestStatus": "ACCEPTED/REJECTED"...}` – только для OPERATOR, меняет статус заявки на ACCEPTED/REJECTED
 
 
