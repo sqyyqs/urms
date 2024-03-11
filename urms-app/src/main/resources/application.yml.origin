@@ -9,8 +9,16 @@ spring:
     enabled: true
     default-schema: public
     change-log: classpath:/migrations/changelogs/db-changelog-master.xml
-logging:
-  level:
-    org.springframework.security: trace
+  cloud:
+    openfeign:
+      client:
+        config:
+          dadataClient:
+            defaultRequestHeaders:
+              Authorization:
+              X-Secret:
+            logger-level: full
+dadata-client:
+  url: https://cleaner.dadata.ru
 jwt:
   token-key: '{"kty":"oct","k":"h17SGRX5FRZooHA0RKGctZ-KtR9FoESgCnHG3BNg5XI"}'

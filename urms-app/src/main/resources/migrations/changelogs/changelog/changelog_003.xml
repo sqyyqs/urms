@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+    <changeSet id="003-1" author="Demin.K">
+        <dropColumn tableName="request" columnName="phone_number"/>
+    </changeSet>
+
+    <changeSet id="003-2" author="Demin.K">
+        <addColumn tableName="request">
+            <column name="country_code" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="request">
+            <column name="city_code" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="request">
+            <column name="phone" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

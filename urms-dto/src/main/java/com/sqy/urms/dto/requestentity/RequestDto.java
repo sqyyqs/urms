@@ -1,7 +1,6 @@
 package com.sqy.urms.dto.requestentity;
 
 import com.sqy.urms.dto.user.UserDto;
-import com.sqy.urms.dto.util.PhoneNumberUtils;
 
 import javax.annotation.Nullable;
 import java.util.Date;
@@ -20,7 +19,7 @@ public record RequestDto(
         this.id = id;
         this.requestStatus = requestStatus;
         this.text = text;
-        this.phoneNumber = PhoneNumberUtils.requireValidate(phoneNumber);
+        this.phoneNumber = Objects.requireNonNull(phoneNumber, "Phone number can't be null");
         this.name = Objects.requireNonNull(name, "Name can't be null.");
         this.createdAt = Objects.requireNonNull(createdAt, "Creation date can't be null.");
         this.fromUser = Objects.requireNonNull(fromUser, "Author can't be null");

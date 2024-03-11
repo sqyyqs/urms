@@ -1,7 +1,5 @@
 package com.sqy.urms.dto.requestentity;
 
-import com.sqy.urms.dto.util.PhoneNumberUtils;
-
 import javax.annotation.Nullable;
 import java.util.Objects;
 
@@ -13,7 +11,7 @@ public record CreateRequestDto(
 
     public CreateRequestDto(@Nullable String text, String phoneNumber, String name) {
         this.text = text;
-        this.phoneNumber = PhoneNumberUtils.requireValidate(phoneNumber);
+        this.phoneNumber = Objects.requireNonNull(phoneNumber, "Phone number can't be null.");
         this.name = Objects.requireNonNull(name, "Name can't be null.");
     }
 }

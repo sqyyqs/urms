@@ -1,7 +1,10 @@
 package com.sqy.urms.core.service.impl;
 
+import com.sqy.urms.core.mapper.PhoneNumberMapper;
 import com.sqy.urms.core.mapper.RequestMapper;
 import com.sqy.urms.core.service.RequestService;
+import com.sqy.urms.dadataclient.DadataClient;
+import com.sqy.urms.dadataclient.dto.PhoneNumberDto;
 import com.sqy.urms.dto.requestentity.CreateRequestDto;
 import com.sqy.urms.dto.requestentity.RequestDto;
 import com.sqy.urms.dto.requestentity.RequestStatus;
@@ -9,7 +12,6 @@ import com.sqy.urms.dto.requestentity.SearchRequestDto;
 import com.sqy.urms.dto.requestentity.UpdateRequestDto;
 import com.sqy.urms.dto.requestentity.UpdateRequestStatusDto;
 import com.sqy.urms.dto.util.AppUserDto;
-import com.sqy.urms.dto.util.PhoneNumberUtils;
 import com.sqy.urms.persistence.model.Request;
 import com.sqy.urms.persistence.model.User;
 import com.sqy.urms.persistence.repository.RequestRepository;
@@ -26,6 +28,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static com.sqy.urms.dadataclient.util.DadataClientUtils.preparePhoneValue;
 import static com.sqy.urms.dto.requestentity.RequestStatus.ACCEPTED;
 import static com.sqy.urms.dto.requestentity.RequestStatus.DRAFT;
 import static com.sqy.urms.dto.requestentity.RequestStatus.REJECTED;
@@ -42,19 +45,21 @@ public class RequestServiceImpl implements RequestService {
     private final RequestMapper requestMapper;
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
+    private final DadataClient dadataClient;
+    private final PhoneNumberMapper phoneNumberMapper;
 
-    public RequestServiceImpl(RequestMapper requestMapper, RequestRepository requestRepository, UserRepository userRepository) {
+    public RequestServiceImpl(RequestMapper requestMapper, RequestRepository requestRepository, UserRepository userRepository, DadataClient dadataClient, PhoneNumberMapper phoneNumberMapper) {
         this.requestMapper = requestMapper;
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
+        this.dadataClient = dadataClient;
+        this.phoneNumberMapper = phoneNumberMapper;
     }
 
     @Override
     @Transactional
     public ResponseEntity<RequestDto> create(CreateRequestDto createRequestDto, String currentUsername) {
         logger.info("Invoke create({}, {}).", createRequestDto, currentUsername);
-
-        PhoneNumberUtils.requireValidate(createRequestDto.phoneNumber());
 
         User user = userRepository.findByLogin(currentUsername);
         if (user == null) {
@@ -76,14 +81,17 @@ public class RequestServiceImpl implements RequestService {
     public ResponseEntity<RequestDto> update(UpdateRequestDto updateRequestDto, String currentUsername) {
         logger.info("Invoke update({}).", updateRequestDto);
 
-        PhoneNumberUtils.requireValidate(updateRequestDto.phoneNumber());
-
         Request request = requestRepository.findById(updateRequestDto.id()).orElse(null);
         if (request == null || request.getRequestStatus() != DRAFT || !request.getUser().getLogin().equals(currentUsername)) {
             return ResponseEntity.notFound().build();
         }
+        PhoneNumberDto phoneNumberDto = dadataClient.getPhone(preparePhoneValue(updateRequestDto.phoneNumber()))
+                .stream()
+                .findAny()
+                .orElse(null);
+
         request.setName(updateRequestDto.name());
-        request.setPhoneNumber(updateRequestDto.phoneNumber());
+        request.setPhoneNumber(phoneNumberMapper.fromDto(phoneNumberDto));
         request.setText(updateRequestDto.text());
 
         RequestDto dto = requestMapper.toDto(requestRepository.save(request));

@@ -2,6 +2,7 @@ package com.sqy.urms.persistence.model;
 
 import com.sqy.urms.dto.requestentity.RequestStatus;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,8 +35,8 @@ public class Request {
     @Column(name = "c_text", columnDefinition = "text")
     private String text;
 
-    @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
+    @Embedded
+    private PhoneNumber phoneNumber;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -45,14 +46,14 @@ public class Request {
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
     public Request() {
     }
 
-    public Request(Long id, RequestStatus requestStatus, String text, String phoneNumber, String name, Date createdAt, User user) {
+    public Request(Long id, RequestStatus requestStatus, String text, PhoneNumber phoneNumber, String name, Date createdAt, User user) {
         this.id = id;
         this.requestStatus = requestStatus;
         this.text = text;
@@ -86,11 +87,11 @@ public class Request {
         this.text = text;
     }
 
-    public String getPhoneNumber() {
+    public PhoneNumber getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

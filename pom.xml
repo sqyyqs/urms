@@ -21,6 +21,7 @@
         <module>urms-persistence</module>
         <module>urms-core</module>
         <module>urms-dto</module>
+        <module>urms-dadata-client</module>
     </modules>
 
     <properties>
@@ -31,6 +32,8 @@
         <jose-jwt.version>9.31</jose-jwt.version>
         <google-jsr305.version>3.0.2</google-jsr305.version>
         <liquibase.version>4.26.0</liquibase.version>
+        <feign-okhttp-client.version>13.2.1</feign-okhttp-client.version>
+        <spring-cloud-starter-openfeign.version>4.1.0</spring-cloud-starter-openfeign.version>
 
         <revision>0.0.1</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -58,6 +61,11 @@
                 <artifactId>urms-dto</artifactId>
                 <version>${revision}${changelist}</version>
             </dependency>
+            <dependency>
+                <groupId>com.sqy</groupId>
+                <artifactId>urms-dadata-client</artifactId>
+                <version>${revision}${changelist}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.nimbusds</groupId>
@@ -75,6 +83,18 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${liquibase.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${feign-okhttp-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring-cloud-starter-openfeign.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
